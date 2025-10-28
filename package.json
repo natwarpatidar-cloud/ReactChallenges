@@ -1,0 +1,7 @@
+{
+  "name": "react-challenges",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
