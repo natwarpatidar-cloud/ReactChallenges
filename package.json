@@ -6,6 +6,10 @@
   ],
   "scripts": {
     "dev:challenge1": "npm --workspace=challenge1 run dev",
-    "dev:challenge2": "npm --workspace=challenge2 run dev"
+    "dev:challenge2": "npm --workspace=challenge2 run dev",
+    "dev:challenge3": "npm --workspace=challenge3 run dev",
+    "dev:challenge4": "npm --workspace=challenge4 run dev",
+    "dev:challenge5": "npm --workspace=challenge5 run dev",
+    "dev:challenge6": "npm --workspace=challenge6 run dev"
   }
 }

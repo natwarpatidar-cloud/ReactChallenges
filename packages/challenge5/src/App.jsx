@@ -43,6 +43,7 @@ function App() {
       age: ''
     });
     setError(null);
+    setIsData(false);
   }
 
   return (
@@ -85,8 +86,8 @@ function App() {
             <>
               <h2>Request sent to DB with below request data</h2>
               <ul>
-                <li>{formData?.username}</li>
-                <li>{formData?.fullname}</li>
+                <li>{formData?.username.toUpperCase()}</li>
+                <li>{formData?.fullname.toUpperCase()}</li>
                 <li>{formData?.age}</li>
               </ul>
             </>
