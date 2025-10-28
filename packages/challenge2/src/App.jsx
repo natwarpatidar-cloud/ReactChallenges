@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect, useRef } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [sec, setSec] = useState(56);
+  const [min, setMin] = useState(0);
+  const [running, setRunning] = useState(false);
+
+  const startTimer = () => {
+    // Complete this function
+    setRunning(true);
+  };
+
+  const stopTimer = () => {
+    // Complete this function
+    setRunning(false);
+  };
+
+  const resetTimer = () => {
+    // Complete this function
+    setRunning(false);
+    setMin(0);
+    setSec(0);
+  };
+
+  useEffect(() => {
+    let interval;
+    if(running) {
+      interval = setInterval(() => {
+        setSec(p => {
+          if(p >= 59) {
+            setMin(m => m + 1);
+            return 0;
+          } else {
+            return p+1;
+          }
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [running]);
 
   return (
-    <>
+    <div className="container">
+      <h1>Timer</h1>
+      <span> {min} mins </span>
+      <span> {sec} secs</span>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <button onClick={startTimer}>Start</button>
+        <button onClick={stopTimer}>Stop</button>
+        <button onClick={resetTimer}>Reset</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
-
-export default App
