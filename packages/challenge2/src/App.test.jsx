@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import App from '../src/App';
+import App from './App';
 
 jest.useFakeTimers();
 
-describe('Timer App', () => {
+describe('stopwatch/Timer', () => {
   it('renders initial timer values correctly', () => {
     render(<App />);
     expect(screen.getByText(/0 mins/i)).toBeInTheDocument();
