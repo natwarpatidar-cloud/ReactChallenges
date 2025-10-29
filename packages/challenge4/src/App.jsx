@@ -19,7 +19,7 @@ export default function App() {
       
         <form>
           <label htmlFor="html">Input Percentage:</label>
-          <input type="number" onChange={(e) => {
+          <input type="number" data-testid="width-input" onChange={(e) => {
             let val = e.target.value
             if(val >= 0 && val < 101) {
               setVal(val);
