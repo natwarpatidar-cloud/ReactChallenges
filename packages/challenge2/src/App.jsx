@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Button} from 'ui/components/button';
 
 export default function App() {
   const [sec, setSec] = useState(56);
@@ -45,7 +46,7 @@ export default function App() {
       <span> {min} mins </span>
       <span> {sec} secs</span>
       <div>
-        <button onClick={startTimer}>Start</button>
+        <Button onClick={startTimer}>Start</Button>
         <button onClick={stopTimer}>Stop</button>
         <button onClick={resetTimer}>Reset</button>
       </div>

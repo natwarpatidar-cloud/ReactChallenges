@@ -1,12 +1,13 @@
 import { useState } from "react";
+import { Button} from 'ui/components/button';
 
 export default function App() {
   const [isVisible, setIsVisible] = useState(true);
   return (
     <div className="App">
-      <button onClick={() => setIsVisible((p) => !p)}>
+      <Button onClick={() => setIsVisible((p) => !p)}>
         {isVisible ? "Hide Text" : "Show Text"}
-      </button>
+      </Button>
       {isVisible && <h1>Hello, welcome to react challenges</h1>}
     </div>
   );
