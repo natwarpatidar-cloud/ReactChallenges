@@ -15,7 +15,6 @@ function App() {
 
   function handleFormSubmit(e) {
     e.preventDefault();
-    console.log(formData);
     setError(null);
     if(!formData.username) {
       setError("Username is required");
@@ -86,8 +85,8 @@ function App() {
             <>
               <h2>Request sent to DB with below request data</h2>
               <ul>
-                <li>{formData?.username.toUpperCase()}</li>
-                <li>{formData?.fullname.toUpperCase()}</li>
+                <li>{formData?.username}</li>
+                <li>{formData?.fullname}</li>
                 <li>{formData?.age}</li>
               </ul>
             </>

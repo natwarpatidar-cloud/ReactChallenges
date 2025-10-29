@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
-describe('App Component', () => {
+describe('Progress bar', () => {
   it('should render the initial progress bar with a default value of 10%', () => {
     render(<App />);
     
