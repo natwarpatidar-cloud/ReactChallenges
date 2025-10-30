@@ -7,7 +7,6 @@ function App() {
   const timerRef = useRef();
 
   const startTimer = () => {
-    if(isRunning) return;
     setIsRunning(true);
     timerRef.current = setInterval(() => {
       setTime(p => {
@@ -33,7 +32,7 @@ function App() {
         <h1>{count}</h1>
         <span>Time left: {time} seconds</span>
         {
-          isRunning && <button style={{width: '30px'}} onClick={() => setCount(count + 1)}>+</button>
+          isRunning && <button style={{width: '30px'}} data-testid="count-button" onClick={() => setCount(count + 1)}>+</button>
         }
       </div>
     </div>

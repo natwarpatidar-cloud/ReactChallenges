@@ -15,6 +15,7 @@ describe('App Component', () => {
 
     it('starts the timer and counts down', () => {
         render(<App />);
+        const button = screen.getByText("+");
         
         expect(screen.getByText(/Time left: 10 seconds/i)).toBeInTheDocument();
 
@@ -29,7 +30,7 @@ describe('App Component', () => {
         });
 
         expect(screen.getByText(/Time left: 0 seconds/i)).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: '+' })).not.toBeInTheDocument();  
+        expect(button).not.toBeInTheDocument();
     });
 
     it('increments count on button click while timer is running', async () => {
@@ -45,15 +46,4 @@ describe('App Component', () => {
 
         expect(screen.getByText('1')).toBeInTheDocument();
     });
-
-    it('button is disabled after the timer ends', async () => {
-        render(<App />);
-        
-        act(() => {
-            jest.advanceTimersByTime(10000);
-        });
-
-        expect(screen.getByRole('button', { name: '+' })).not.toBeInTheDocument();
-    });
-
 });

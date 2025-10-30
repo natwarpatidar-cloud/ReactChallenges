@@ -10,5 +10,12 @@ export default {
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['js','jsx','json','node'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  transformIgnorePatterns: ['/node_modules/']
+  transformIgnorePatterns: ['/node_modules/'],
+  coverageDirectory: "<rootDir>/coverage",
+  collectCoverageFrom: [
+    "packages/**/*.{js,jsx,ts,tsx}"
+  ],
+  coveragePathIgnorePatterns: [
+    "<rootDir>/packages/.*/src/main\\.jsx$"
+  ]
 };

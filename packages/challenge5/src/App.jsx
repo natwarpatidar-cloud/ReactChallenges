@@ -28,10 +28,6 @@ function App() {
       setError("Age is required");
       return;
     }
-    if(formData.age < 0 && formData.age > 100) {
-      setError("Please enter a valid age");
-      return;
-    }
     setIsData(true);
   }
 

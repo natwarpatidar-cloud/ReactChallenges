@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import App from './App';
 
 describe('Form data', () => {
@@ -12,50 +13,77 @@ describe('Form data', () => {
         expect(screen.getByRole('button', { name: 'Reset' })).toBeVisible();
     });
 
-    it('should display the data correctly on click of submit button', () => {
+    it('should display the data correctly on click of submit button', async () => {
         render(<App />);
-
-        const username = screen.getByLabelText(/Username:/i)
-        const fullName = screen.getByLabelText(/Full name:/i)
-        const age = screen.getByLabelText(/Age:/i)
-
-        fireEvent.change(username, { target: { value: 'Natwar' } });
-        fireEvent.change(fullName, { target: { value: 'Natwar Patidar' } });
-        fireEvent.change(age, { target: { value: '20' } });
-
-        fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
-
-        expect(screen.getByText("Natwar")).toBeInTheDocument();
-        expect(screen.getByText("Natwar Patidar")).toBeInTheDocument();
-        expect(screen.getByText("20")).toBeInTheDocument();
-    });
-
-    it('should reset the form fields and clear the displayed data when Reset is clicked', () => {
-        render(<App />);
+        const user = userEvent.setup();
 
         const username = screen.getByLabelText(/Username:/i);
         const fullName = screen.getByLabelText(/Full name:/i);
         const age = screen.getByLabelText(/Age:/i);
 
-        fireEvent.change(username, { target: { value: 'Natwar' } });
-        fireEvent.change(fullName, { target: { value: 'Natwar Patidar' } });
-        fireEvent.change(age, { target: { value: '20' } });
+        await user.type(username, "Natwar");
+        await user.type(fullName, "Natwar Patidar");
+        await user.type(age, "20");
 
-        fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
+        await user.click(screen.getByRole('button', { name: 'Submit' }));
 
-        screen.findByText('Natwar');
-        screen.findByText('Natwar Patidar');
-        screen.findByText('20');
+        await waitFor(() => {
+            expect(screen.getByText("Natwar")).toBeInTheDocument();
+            expect(screen.getByText("Natwar Patidar")).toBeInTheDocument();
+            expect(screen.getByText("20")).toBeInTheDocument();
+        });
+    });
 
-        fireEvent.click(screen.getByRole('button', { name: 'Reset' }));
+    it('should reset the form fields and clear the displayed data when Reset is clicked', async () => {
+        render(<App />);
+        const user = userEvent.setup();
 
-        expect(username.value).toBe('');
-        expect(fullName.value).toBe('');
-        expect(age.value).toBe('');
+        const username = screen.getByLabelText(/Username:/i);
+        const fullName = screen.getByLabelText(/Full name:/i);
+        const age = screen.getByLabelText(/Age:/i);
 
-        expect(screen.queryByText('Natwar')).not.toBeInTheDocument();
-        expect(screen.queryByText('Natwar Patidar')).not.toBeInTheDocument();
-        expect(screen.queryByText('20')).not.toBeInTheDocument();
-    })
+        await user.type(username, "Natwar");
+        await user.type(fullName, "Natwar Patidar");
+        await user.type(age, "20");
 
+        await user.click(screen.getByRole('button', { name: 'Submit' }));
+
+        await waitFor(() => {
+            expect(screen.getByText('Natwar')).toBeInTheDocument();
+            expect(screen.getByText('Natwar Patidar')).toBeInTheDocument();
+            expect(screen.getByText('20')).toBeInTheDocument();
+        });
+
+        await user.click(screen.getByRole('button', { name: 'Reset' }));
+
+        expect(username).toHaveValue('');
+        expect(fullName).toHaveValue('');
+        expect(age).toHaveValue(null);
+
+        await waitFor(() => {
+            expect(screen.queryByText('Natwar')).not.toBeInTheDocument();
+            expect(screen.queryByText('Natwar Patidar')).not.toBeInTheDocument();
+            expect(screen.queryByText('20')).not.toBeInTheDocument();
+        });
+    });
+
+    it('should show error message if form fields are empty', async () => {
+        render(<App />);
+        const user = userEvent.setup();
+
+        const username = screen.getByLabelText(/Username:/i);
+        const fullName = screen.getByLabelText(/Full name:/i);
+        const submitButton = screen.getByRole('button', { name: 'Submit' });
+
+        await user.click(submitButton);
+        expect(await screen.findByText('Username is required')).toBeInTheDocument();
+
+        await user.type(username, 'Natwar');
+        await user.click(submitButton);
+        expect(await screen.findByText('Full name is required')).toBeInTheDocument();
+
+        await user.type(fullName, 'Natwar Patidar');
+        await user.click(submitButton);
+        expect(await screen.findByText('Age is required')).toBeInTheDocument();
+    });
 });
